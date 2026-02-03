@@ -65,7 +65,7 @@ const sortedUpdates = updates.sort((a, b) =>
       }
       
       try {
-        const response = await fetch(`/functions/api/updates/${slug}`, {
+        const response = await fetch(`/api/updates/${slug}`, {
           method: 'DELETE'
         });
         

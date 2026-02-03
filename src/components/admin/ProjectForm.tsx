@@ -78,7 +78,7 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
             const formData = new FormData();
             formData.append('file', file);
 
-            const response = await fetch('/functions/api/upload', {
+            const response = await fetch('/api/upload', {
                 method: 'POST',
                 body: formData
             });
@@ -123,8 +123,8 @@ export default function ProjectForm({ mode, initialData }: ProjectFormProps) {
             };
 
             const endpoint = mode === 'create'
-                ? '/functions/api/projects/create'
-                : `/functions/api/projects/${initialData?.slug}`;
+                ? '/api/projects/create'
+                : `/api/projects/${initialData?.slug}`;
 
             const method = mode === 'create' ? 'POST' : 'PUT';
 

@@ -51,8 +51,9 @@ export default function UpdateForm({ mode, initialData }: UpdateFormProps) {
             };
 
             const endpoint = mode === 'create'
-                ? '/functions/api/updates/create'
-                : `/functions/api/updates/${initialData?.slug}`;
+                ? '/api/updates/create'
+                : `/api/updates/${initialData?.slug}`;
+
 
             const method = mode === 'create' ? 'POST' : 'PUT';
 

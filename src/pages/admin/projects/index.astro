@@ -66,7 +66,7 @@ const sortedProjects = projects.sort((a, b) => b.data.year - a.data.year);
       }
       
       try {
-        const response = await fetch(`/functions/api/projects/${slug}`, {
+        const response = await fetch(`/api/projects/${slug}`, {
           method: 'DELETE'
         });
         
