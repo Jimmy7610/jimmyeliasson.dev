@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const updates = (await getCollection('updates')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<BaseLayout 
+  title="Build Log - Jimmy Eliasson"
+  description="Follow my journey as a developer through updates and posts."
+  page="buildLog"
+>
+  <div data-page="buildLog" class="section-spacing">
+    <div class="container-custom max-w-4xl">
+      <!-- Header -->
+      <div class="mb-12">
+        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4" id="page-title">
+          Build Log
+        </h1>
+        <p class="text-lg text-text-secondary" id="page-description">
+          Updates, experiments, and thoughts from my development journey
+        </p>
+      </div>
+
+      <!-- Updates Grid -->
+      <div class="space-y-6">
+        {await Promise.all(updates.map(async (update) => {
+          const { Content } = await update.render();
+          return (
+            <article class="glass-card p-6 hover:border-cyan-primary/50 transition-colors">
+              <div class="flex items-start justify-between gap-4 mb-3">
+                <h2 class="text-2xl font-display font-semibold" 
+                    data-update-title-sv={update.data.title.sv}
+                    data-update-title-en={update.data.title.en}>
+                  {update.data.title.en}
+                </h2>
+                <time class="text-sm text-text-muted whitespace-nowrap">
+                  {update.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                </time>
+              </div>
+              
+              {update.data.tags && (
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {update.data.tags.map(tag => (
+                    <span class="text-xs px-2 py-1 rounded bg-glass-border text-text-muted">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+              
+              <div class="prose prose-invert prose-cyan max-w-none">
+                <Content />
+              </div>
+            </article>
+          );
+        }))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getLang, t } from '../i18n';
+  
+  function updateBuildLogPage() {
+    const lang = getLang();
+    const title = document.getElementById('page-title');
+    const desc = document.getElementById('page-description');
+    
+    if (title) title.textContent = t('buildLog.title', lang);
+    if (desc) desc.textContent = lang === 'sv'
+      ? 'Uppdateringar, experiment och tankar från min utvecklingsresa'
+      : 'Updates, experiments, and thoughts from my development journey';
+    
+    // Update titles
+    document.querySelectorAll('[data-update-title-sv]').forEach(el => {
+      const sv = el.getAttribute('data-update-title-sv');
+      const en = el.getAttribute('data-update-title-en');
+      if (sv && en) {
+        el.textContent = lang === 'sv' ? sv : en;
+      }
+    });
+  }
+  
+  updateBuildLogPage();
+  window.addEventListener('langchange', updateBuildLogPage);
+</script>
+</BaseLayout>

@@ -1,0 +1,92 @@
+{
+    "nav": {
+        "home": "Hem",
+        "projects": "Projekt",
+        "buildLog": "Bygglogg",
+        "ideaLab": "Idélabb",
+        "about": "Om"
+    },
+    "hero": {
+        "tagline": "Skapar innovativa digitala upplevelser",
+        "subtitle": "Senior produktutvecklare & kreativ teknolog",
+        "cta": "Utforska mina projekt"
+    },
+    "sections": {
+        "myProjects": "Mina Projekt",
+        "latestUpdates": "Senaste Uppdateringar",
+        "ideaLab": "Idélabb"
+    },
+    "project": {
+        "status": {
+            "active": "Aktiv",
+            "done": "Klar",
+            "paused": "Pausad"
+        },
+        "viewProject": "Visa projekt",
+        "repository": "Källkod",
+        "liveDemo": "Live demo",
+        "year": "År",
+        "role": "Roll",
+        "stack": "Teknikstack",
+        "highlights": "Höjdpunkter"
+    },
+    "buildLog": {
+        "title": "Bygglogg",
+        "readMore": "Läs mer",
+        "publishedOn": "Publicerad",
+        "empty": "Inga uppdateringar än"
+    },
+    "ideaLab": {
+        "title": "Idélabb",
+        "description": "Generera unika projektidéer med AI-assisterad brainstorming",
+        "generate": "Generera idéer",
+        "seedPlaceholder": "Valfri utgångspunkt...",
+        "saveToBacklog": "Spara till backlog",
+        "backlog": "Sparade Idéer",
+        "emptyBacklog": "Ingen backlog än. Generera och spara idéer!",
+        "idea": {
+            "title": "Titel",
+            "pitch": "Pitch",
+            "features": "Funktioner",
+            "stack": "Föreslagen stack"
+        }
+    },
+    "about": {
+        "title": "Om mig",
+        "bio": "Jag är en passionerad produktutvecklare som älskar att bygga vackra och funktionella digitala upplevelser."
+    },
+    "footer": {
+        "followMe": "Följ mig",
+        "rights": "Alla rättigheter förbehållna"
+    },
+    "meta": {
+        "home": {
+            "title": "Jimmy Eliasson - Produktutvecklare & Kreativ Teknolog",
+            "description": "Portfolio för Jimmy Eliasson. Utforska innovativa projekt, bygglogg och experimentella idéer."
+        },
+        "projects": {
+            "title": "Projekt - Jimmy Eliasson",
+            "description": "Utforska mina senaste projekt inom webbutveckling, mobilappar och kreativ teknologi."
+        },
+        "buildLog": {
+            "title": "Bygglogg - Jimmy Eliasson",
+            "description": "Följ min resa som utvecklare genom uppdateringar och inlägg."
+        },
+        "ideaLab": {
+            "title": "Idélabb - Jimmy Eliasson",
+            "description": "Experimentera med AI-genererade projektidéer och brainstorming."
+        },
+        "about": {
+            "title": "Om - Jimmy Eliasson",
+            "description": "Lär känna Jimmy Eliasson - produktutvecklare, designer och kreativ teknolog."
+        }
+    },
+    "common": {
+        "loading": "Laddar...",
+        "error": "Ett fel uppstod",
+        "noResults": "Inga resultat",
+        "filter": "Filtrera",
+        "all": "Alla",
+        "search": "Sök"
+    }
+}

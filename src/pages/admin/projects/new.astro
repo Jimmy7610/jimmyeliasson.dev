@@ -1,0 +1,28 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import ProjectForm from '../../../components/admin/ProjectForm';
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+---
+
+<AdminLayout title="Nytt Projekt">
+  <div class="max-w-4xl">
+    <div class="mb-6">
+      <a 
+        href="/admin/projects" 
+        class="text-cyan-primary hover:text-green-acid transition-colors duration-300 inline-flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Tillbaka till projekt
+      </a>
+    </div>
+
+    <h2 class="text-3xl font-display font-bold mb-6 text-text-primary">Skapa Nytt Projekt</h2>
+    
+    <ProjectForm client:load mode="create" />
+  </div>
+</AdminLayout>

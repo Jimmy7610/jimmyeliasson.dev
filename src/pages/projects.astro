@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year);
+---
+
+<BaseLayout 
+  title="Projects - Jimmy Eliasson"
+  description="Explore my latest projects in web development, mobile apps, and creative technology."
+  page="projects"
+>
+  <div data-page="projects" class="section-spacing">
+    <div class="container-custom">
+      <!-- Header -->
+      <div class="max-w-3xl mx-auto text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4" id="page-title">
+          Projects
+        </h1>
+        <p class="text-lg text-text-secondary" id="page-description">
+          A collection of web applications, mobile apps, and creative experiments
+        </p>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {projects.map(project => (
+          <div
+            data-title-sv={project.data.title.sv}
+            data-title-en={project.data.title.en}
+            data-desc-sv={project.data.description.sv}
+            data-desc-en={project.data.description.en}
+          >
+            <ProjectCard project={project} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getLang, t } from '../i18n';
+  
+  function updateProjectsPage() {
+    const lang = getLang();
+    const title = document.getElementById('page-title');
+    const desc = document.getElementById('page-description');
+    
+    if (title) title.textContent = t('nav.projects', lang);
+    if (desc) desc.textContent = lang === 'sv' 
+      ? 'En samling webbapplikationer, mobilappar och kreativa experiment'
+      : 'A collection of web applications, mobile apps, and creative experiments';
+  }
+  
+  updateProjectsPage();
+  window.addEventListener('langchange', updateProjectsPage);
+</script>
+</BaseLayout>

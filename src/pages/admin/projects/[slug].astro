@@ -1,0 +1,64 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import ProjectForm from '../../../components/admin/ProjectForm';
+import { getEntry } from 'astro:content';
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/admin/projects');
+}
+
+const project = await getEntry('projects', slug);
+
+if (!project) {
+  return Astro.redirect('/admin/projects');
+}
+
+// Prepare initial data for form
+const initialData = {
+  slug: project.slug,
+  title_sv: project.data.title.sv,
+  title_en: project.data.title.en,
+  description_sv: project.data.description.sv,
+  description_en: project.data.description.en,
+  role_sv: project.data.role?.sv,
+  role_en: project.data.role?.en,
+  status: project.data.status,
+  year: project.data.year,
+  tags: project.data.tags || [],
+  stack: project.data.stack || [],
+  repo_link: project.data.links?.repo,
+  live_link: project.data.links?.live,
+  coverImage: project.data.coverImage,
+  highlightBullets_sv: project.data.highlightBullets?.sv,
+  highlightBullets_en: project.data.highlightBullets?.en,
+  body: project.body
+};
+---
+
+<AdminLayout title={`Redigera: ${project.data.title.sv}`}>
+  <div class="max-w-4xl">
+    <div class="mb-6">
+      <a 
+        href="/admin/projects" 
+        class="text-cyan-primary hover:text-green-acid transition-colors duration-300 inline-flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Tillbaka till projekt
+      </a>
+    </div>
+
+    <h2 class="text-3xl font-display font-bold mb-6 text-text-primary">
+      Redigera Projekt: {project.data.title.sv}
+    </h2>
+    
+    <ProjectForm client:load mode="edit" initialData={initialData} />
+  </div>
+</AdminLayout>

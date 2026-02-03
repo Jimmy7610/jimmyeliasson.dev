@@ -1,0 +1,53 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import UpdateForm from '../../../components/admin/UpdateForm';
+import { getEntry } from 'astro:content';
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+
+const { slug } = Astro.params;
+
+if (!slug) {
+  return Astro.redirect('/admin/updates');
+}
+
+const update = await getEntry('updates', slug);
+
+if (!update) {
+  return Astro.redirect('/admin/updates');
+}
+
+// Prepare initial data
+const initialData = {
+  slug: update.slug,
+  title_sv: update.data.title.sv,
+  title_en: update.data.title.en,
+  date: typeof update.data.date === 'string' ? update.data.date : update.data.date.toISOString().split('T')[0],
+  tags: update.data.tags || [],
+  body: update.body
+};
+---
+
+<AdminLayout title={`Redigera: ${update.data.title.sv}`}>
+  <div class="max-w-4xl">
+    <div class="mb-6">
+      <a 
+        href="/admin/updates" 
+        class="text-green-acid hover:text-cyan-primary transition-colors duration-300 inline-flex items-center gap-2"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Tillbaka till bygglogg
+      </a>
+    </div>
+
+    <h2 class="text-3xl font-display font-bold mb-6 text-text-primary">
+      Redigera Uppdatering: {update.data.title.sv}
+    </h2>
+    
+    <UpdateForm client:load mode="edit" initialData={initialData} />
+  </div>
+</AdminLayout>

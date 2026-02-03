@@ -1,0 +1,168 @@
+backend:
+  name: test-repo
+
+# For production, change to:
+# backend:
+#   name: git-gateway
+#   branch: main
+
+# Media files (project covers, etc.)
+media_folder: "public/images/covers"
+public_folder: "/images/covers"
+
+# Collections
+collections:
+  # Projects Collection
+  - name: "projects"
+    label: "Projects"
+    label_singular: "Project"
+    folder: "src/content/projects"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      # Title (bilingual)
+      - label: "Title (Swedish)"
+        name: "title_sv"
+        widget: "string"
+        required: true
+      - label: "Title (English)"
+        name: "title_en"
+        widget: "string"
+        required: true
+      
+      # Description (bilingual)
+      - label: "Description (Swedish)"
+        name: "description_sv"
+        widget: "text"
+        required: true
+      - label: "Description (English)"
+        name: "description_en"
+        widget: "text"
+        required: true
+      
+      # Role (bilingual, optional)
+      - label: "Role (Swedish)"
+        name: "role_sv"
+        widget: "string"
+        required: false
+      - label: "Role (English)"
+        name: "role_en"
+        widget: "string"
+        required: false
+      
+      # Status
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["active", "done", "paused"]
+        default: "active"
+      
+      # Year
+      - label: "Year"
+        name: "year"
+        widget: "number"
+        value_type: "int"
+        min: 2020
+        max: 2030
+        default: 2026
+      
+      # Tags
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        allow_add: true
+      
+      # Tech Stack
+      - label: "Tech Stack"
+        name: "stack"
+        widget: "list"
+        required: true
+        allow_add: true
+      
+      # Links
+      - label: "Repository URL"
+        name: "repo_link"
+        widget: "string"
+        required: false
+        pattern: ['https?://.+', 'Must be a valid URL']
+      
+      - label: "Live Demo URL"
+        name: "live_link"
+        widget: "string"
+        required: false
+        pattern: ['https?://.+', 'Must be a valid URL']
+      
+      # Cover Image
+      - label: "Cover Image"
+        name: "coverImage"
+        widget: "image"
+        required: true
+        media_folder: "/public/images/covers"
+        public_folder: "/images/covers"
+      
+      # Highlight Bullets (bilingual)
+      - label: "Highlights (Swedish)"
+        name: "highlightBullets_sv"
+        widget: "list"
+        required: false
+        allow_add: true
+      
+      - label: "Highlights (English)"
+        name: "highlightBullets_en"
+        widget: "list"
+        required: false
+        allow_add: true
+      
+      # Body Content
+      - label: "Content"
+        name: "body"
+        widget: "markdown"
+        required: false
+
+  # Build Log / Updates Collection
+  - name: "updates"
+    label: "Build Log"
+    label_singular: "Update"
+    folder: "src/content/updates"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      # Title (bilingual)
+      - label: "Title (Swedish)"
+        name: "title_sv"
+        widget: "string"
+        required: true
+      
+      - label: "Title (English)"
+        name: "title_en"
+        widget: "string"
+        required: true
+      
+      # Date
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        format: "YYYY-MM-DD"
+        date_format: "YYYY-MM-DD"
+        time_format: false
+        required: true
+      
+      # Tags
+      - label: "Tags"
+        name: "tags"
+        widget: "list"
+        required: false
+        allow_add: true
+      
+      # Body Content
+      - label: "Content"
+        name: "body"
+        widget: "markdown"
+        required: true

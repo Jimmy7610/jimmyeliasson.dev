@@ -1,0 +1,194 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map(project => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await project.render();
+---
+
+<BaseLayout 
+  title={`${project.data.title.en} - Jimmy Eliasson`}
+  description={project.data.description.en}
+  page="projects"
+>
+  <div data-page="project-detail" class="section-spacing">
+    <div class="container-custom max-w-4xl">
+      <!-- Back Link -->
+      <a href="/projects" class="inline-flex items-center gap-2 text-cyan-primary hover:text-green-acid transition-colors mb-8">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span id="back-link">Back to projects</span>
+      </a>
+
+      <!-- Cover Image -->
+      <div class="aspect-video rounded-glass overflow-hidden mb-8 border border-glass-border">
+        <img src={project.data.coverImage} alt="" class="w-full h-full object-cover" />
+      </div>
+
+      <!-- Header -->
+      <div class="mb-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class:list={['badge', `badge-${project.data.status}`]} data-status={project.data.status}>
+            {project.data.status}
+          </span>
+          <span class="text-text-muted">{project.data.year}</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4" 
+            data-title-sv={project.data.title.sv}
+            data-title-en={project.data.title.en}>
+          {project.data.title.en}
+        </h1>
+        
+        <p class="text-xl text-text-secondary"
+           data-desc-sv={project.data.description.sv}
+           data-desc-en={project.data.description.en}>
+          {project.data.description.en}
+        </p>
+      </div>
+
+      <!-- Meta Grid -->
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        {project.data.role && (
+          <div class="glass-card p-5">
+            <h3 class="text-sm text-text-muted mb-2" id="meta-role">Role</h3>
+            <p class="font-semibold" data-role-sv={project.data.role.sv} data-role-en={project.data.role.en}>
+              {project.data.role.en}
+            </p>
+          </div>
+        )}
+        
+        <div class="glass-card p-5">
+          <h3 class="text-sm text-text-muted mb-2" id="meta-stack">Tech Stack</h3>
+          <div class="flex flex-wrap gap-2">
+            {project.data.stack.map(tech => (
+              <span class="px-2 py-1 text-sm rounded bg-cyan-primary/20 text-cyan-primary border border-cyan-primary/50">
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Highlights -->
+      {project.data.highlightBullets && (
+        <div class="glass-card p-6 mb-12">
+          <h3 class="text-xl font-display font-semibold mb-4" id="meta-highlights">Highlights</h3>
+          <ul class="space-y-2" data-highlights-sv={JSON.stringify(project.data.highlightBullets.sv)} data-highlights-en={JSON.stringify(project.data.highlightBullets.en)}>
+            {project.data.highlightBullets.en.map(bullet => (
+              <li class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-green-acid flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span class="bullet-text">{bullet}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <!-- Links -->
+      {project.data.links && (
+        <div class="flex flex-wrap gap-4 mb-12">
+          {project.data.links.repo && (
+            <a href={project.data.links.repo} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+              <span id="link-repo">Repository</span> →
+            </a>
+          )}
+          {project.data.links.live && (
+            <a href={project.data.links.live} target="_blank" rel="noopener noreferrer" class="btn-primary">
+              <span id="link-live">Live Demo</span> →
+            </a>
+          )}
+        </div>
+      )}
+
+      <!-- Content -->
+      <div class="prose prose-invert prose-cyan prose-lg max-w-none">
+        <Content />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getLang, t } from '../../i18n';
+  
+  function updateProjectDetail() {
+    const lang = getLang();
+    
+    // Back link
+    const backLink = document.getElementById('back-link');
+    if (backLink) backLink.textContent = lang === 'sv' ? 'Tillbaka till projekt' : 'Back to projects';
+    
+    // Meta labels
+    const metaRole = document.getElementById('meta-role');
+    const metaStack = document.getElementById('meta-stack');
+    const metaHighlights = document.getElementById('meta-highlights');
+    const linkRepo = document.getElementById('link-repo');
+    const linkLive = document.getElementById('link-live');
+    
+    if (metaRole) metaRole.textContent = t('project.role', lang);
+    if (metaStack) metaStack.textContent = t('project.stack', lang);
+    if (metaHighlights) metaHighlights.textContent = t('project.highlights', lang);
+    if (linkRepo) linkRepo.textContent = t('project.repository', lang);
+    if (linkLive) linkLive.textContent = t('project.liveDemo', lang);
+    
+    // Title
+    const titleEl = document.querySelector('[data-title-sv]');
+    if (titleEl) {
+      const sv = titleEl.getAttribute('data-title-sv');
+      const en = titleEl.getAttribute('data-title-en');
+      if (sv && en) titleEl.textContent = lang === 'sv' ? sv : en;
+    }
+    
+    // Description
+    const descEl = document.querySelector('[data-desc-sv]');
+    if (descEl) {
+      const sv = descEl.getAttribute('data-desc-sv');
+      const en = descEl.getAttribute('data-desc-en');
+      if (sv && en) descEl.textContent = lang === 'sv' ? sv : en;
+    }
+    
+    // Role
+    const roleEl = document.querySelector('[data-role-sv]');
+    if (roleEl) {
+      const sv = roleEl.getAttribute('data-role-sv');
+      const en = roleEl.getAttribute('data-role-en');
+      if (sv && en) roleEl.textContent = lang === 'sv' ? sv : en;
+    }
+    
+    // Status
+    const statusEl = document.querySelector('[data-status]');
+    if (statusEl) {
+      const status = statusEl.getAttribute('data-status');
+      if (status) statusEl.textContent = t(`project.status.${status}`, lang);
+    }
+    
+    // Highlights
+    const highlightsEl = document.querySelector('[data-highlights-sv]');
+    if (highlightsEl) {
+      const sv = JSON.parse(highlightsEl.getAttribute('data-highlights-sv') || '[]');
+      const en = JSON.parse(highlightsEl.getAttribute('data-highlights-en') || '[]');
+      const bullets = lang === 'sv' ? sv : en;
+      
+      const bulletEls = highlightsEl.querySelectorAll('.bullet-text');
+      bulletEls.forEach((el, i) => {
+        if (bullets[i]) el.textContent = bullets[i];
+      });
+    }
+  }
+  
+  updateProjectDetail();
+  window.addEventListener('langchange', updateProjectDetail);
+</script>
+</BaseLayout>

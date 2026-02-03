@@ -1,0 +1,91 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = 'Admin Portal' } = Astro.props;
+---
+
+<BaseLayout 
+  title={`Admin | ${title}`}
+  description={description}
+>
+  <div class="min-h-screen bg-glass-dark pt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Admin Header -->
+      <div class="mb-8">
+        <h1 class="text-4xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-primary to-green-acid mb-2">
+          Admin Portal
+        </h1>
+        <p class="text-text-secondary">
+          Hantera projekt och bygglogg
+        </p>
+      </div>
+
+      <!-- Admin Navigation -->
+      <nav class="glass-card p-4 mb-8">
+        <ul class="flex gap-4">
+          <li>
+            <a 
+              href="/admin" 
+              class="text-text-secondary hover:text-cyan-primary transition-colors duration-300 px-3 py-2 rounded-lg"
+              data-admin-nav="dashboard"
+            >
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a 
+              href="/admin/projects" 
+              class="text-text-secondary hover:text-cyan-primary transition-colors duration-300 px-3 py-2 rounded-lg"
+              data-admin-nav="projects"
+            >
+              Projekt
+            </a>
+          </li>
+          <li>
+            <a 
+              href="/admin/updates" 
+              class="text-text-secondary hover:text-cyan-primary transition-colors duration-300 px-3 py-2 rounded-lg"
+              data-admin-nav="updates"
+            >
+              Bygglogg
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Content -->
+      <div class="glass-card p-8">
+        <slot />
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Highlight active nav link
+  const currentPath = window.location.pathname;
+  const links = document.querySelectorAll('[data-admin-nav]');
+  
+  links.forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+    
+    let isActive = false;
+    
+    if (href === '/admin' && currentPath === '/admin') {
+      isActive = true;
+    } else if (href !== '/admin' && currentPath.startsWith(href)) {
+      isActive = true;
+    }
+    
+    if (isActive) {
+      link.classList.remove('text-text-secondary');
+      link.classList.add('text-cyan-primary', 'font-semibold', 'bg-cyan-primary/10');
+    }
+  });
+</script>

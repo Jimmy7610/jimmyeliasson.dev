@@ -1,0 +1,154 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const projects = (await getCollection('projects')).sort((a, b) => b.data.year - a.data.year).slice(0, 3);
+const updates = (await getCollection('updates')).sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 3);
+---
+
+<BaseLayout 
+  title="Jimmy Eliasson - Product Engineer & Creative Technologist"
+  description="Portfolio of Jimmy Eliasson. Explore innovative projects, build log, and experimental ideas."
+  page="home"
+>
+  <div data-page="home">
+    <!-- Hero Section -->
+    <section class="section-spacing bg-gradient-to-b from-glass-dark to-glass-surface">
+      <div class="container-custom">
+        <div class="max-w-4xl mx-auto text-center space-y-6 animate-fade-in">
+          <h1 class="text-5xl md:text-7xl font-display font-bold">
+            <span class="text-gradient" id="hero-tagline">Crafting innovative digital experiences</span>
+          </h1>
+          <p class="text-xl md:text-2xl text-text-secondary" id="hero-subtitle">
+            Senior Product Engineer & Creative Technologist
+          </p>
+          <div class="pt-4">
+            <a href="/projects" class="btn-primary inline-block" id="hero-cta">
+              Explore my projects
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Grid Section -->
+    <section class="section-spacing">
+      <div class="container-custom">
+        <div class="grid gap-12 md:grid-cols-3">
+          <!-- Projects Column -->
+          <div class="md:col-span-2 space-y-6">
+            <div class="flex justify-between items-center">
+              <h2 class="text-3xl font-display font-bold" id="section-projects">My Projects</h2>
+              <a href="/projects" class="text-cyan-primary hover:text-green-acid transition-colors" id="view-all-projects">
+                View all →
+              </a>
+            </div>
+            
+            <div class="grid gap-6 sm:grid-cols-2">
+              {projects.map(project => (
+                <div
+                  data-title-sv={project.data.title.sv}
+                  data-title-en={project.data.title.en}
+                  data-desc-sv={project.data.description.sv}
+                  data-desc-en={project.data.description.en}
+                >
+                  <ProjectCard project={project} />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <!-- Sidebar -->
+          <div class="space-y-8">
+            <!-- Build Log -->
+            <div class="space-y-4">
+              <div class="flex justify-between items-center">
+                <h3 class="text-2xl font-display font-semibold" id="section-updates">Latest Updates</h3>
+                <a href="/build-log" class="text-sm text-cyan-primary hover:text-green-acid transition-colors" id="view-all-updates">
+                  View all →
+                </a>
+              </div>
+              
+              <div class="space-y-3">
+                {updates.map(update => (
+                  <div class="glass-card p-4 space-y-2 hover:border-cyan-primary/50 transition-colors">
+                    <p class="text-xs text-text-muted">
+                      {update.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
+                    <h4 class="font-semibold text-text-primary" data-update-title-sv={update.data.title.sv} data-update-title-en={update.data.title.en}>
+                      {update.data.title.en}
+                    </h4>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <!-- Idea Lab Teaser -->
+            <div class="glass-card p-6 space-y-3 border-2 border-green-acid/30">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-acid animate-pulse"></div>
+                <h3 class="text-xl font-display font-semibold" id="section-idealab">Idea Lab</h3>
+              </div>
+              <p class="text-text-secondary text-sm" id="idealab-description">
+                Generate unique project ideas with AI-assisted brainstorming
+              </p>
+              <a href="/lab" class="btn-secondary block text-center" id="try-idealab">
+                Try it now →
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getLang, t } from '../i18n';
+  
+  function updateHomePage() {
+    const lang = getLang();
+    
+    // Hero
+    const tagline = document.getElementById('hero-tagline');
+    const subtitle = document.getElementById('hero-subtitle');
+    const cta = document.getElementById('hero-cta');
+    
+    if (tagline) tagline.textContent = t('hero.tagline', lang);
+    if (subtitle) subtitle.textContent = t('hero.subtitle', lang);
+    if (cta) cta.textContent = t('hero.cta', lang);
+    
+    // Sections
+    const sectionProjects = document.getElementById('section-projects');
+    const sectionUpdates = document.getElementById('section-updates');
+    const sectionIdealab = document.getElementById('section-idealab');
+    
+    if (sectionProjects) sectionProjects.textContent = t('sections.myProjects', lang);
+    if (sectionUpdates) sectionUpdates.textContent = t('sections.latestUpdates', lang);
+    if (sectionIdealab) sectionIdealab.textContent = t('ideaLab.title', lang);
+    
+    // Links
+    const viewAllProjects = document.getElementById('view-all-projects');
+    const viewAllUpdates = document.getElementById('view-all-updates');
+    const tryIdealab = document.getElementById('try-idealab');
+    const ideaDescription = document.getElementById('idealab-description');
+    
+    if (viewAllProjects) viewAllProjects.textContent = lang === 'sv' ? 'Visa alla →' : 'View all →';
+    if (viewAllUpdates) viewAllUpdates.textContent = lang === 'sv' ? 'Visa alla →' : 'View all →';
+    if (tryIdealab) tryIdealab.textContent = lang === 'sv' ? 'Prova nu →' : 'Try it now →';
+    if (ideaDescription) ideaDescription.textContent = t('ideaLab.description', lang);
+    
+    // Update titles
+    document.querySelectorAll('[data-update-title-sv]').forEach(el => {
+      const sv = el.getAttribute('data-update-title-sv');
+      const en = el.getAttribute('data-update-title-en');
+      if(sv && en) {
+        el.textContent = lang === 'sv' ? sv : en;
+      }
+    });
+  }
+  
+  updateHomePage();
+  window.addEventListener('langchange', updateHomePage);
+</script>

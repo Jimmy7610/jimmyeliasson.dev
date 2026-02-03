@@ -1,0 +1,84 @@
+---
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  page?: string;
+}
+
+const { title, description, page = 'home' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en" data-lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="sv_SE" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Early language detection script -->
+    <script is:inline>
+      (function() {
+        const stored = localStorage.getItem('lang');
+        const lang = stored || (navigator.language.toLowerCase().startsWith('sv') ? 'sv' : 'en');
+        document.documentElement.lang = lang;
+        document.documentElement.setAttribute('data-lang', lang);
+      })();
+    </script>
+  </head>
+  <body>
+    <Nav />
+    <main class="min-h-screen">
+      <slot />
+    </main>
+    <Footer />
+    
+    <!-- Update meta tags based on language -->
+    <script>
+      import { getLang, t } from '../i18n';
+      
+      function updateMeta() {
+        const lang = getLang();
+        const page = document.body.dataset.page || 'home';
+        
+        const title = t(`meta.${page}.title`, lang);
+        const description = t(`meta.${page}.description`, lang);
+        
+        document.title = title;
+        document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+        document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+        document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+        document.querySelector('meta[property="og:locale"]')?.setAttribute('content', lang === 'sv' ? 'sv_SE' : 'en_US');
+      }
+      
+      // Update on load
+      updateMeta();
+      
+      // Update on language change
+      window.addEventListener('langchange', updateMeta);
+    </script>
+  </body>
+</html>

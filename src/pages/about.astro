@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout 
+  title="About - Jimmy Eliasson"
+  description="Get to know Jimmy Eliasson - product engineer, designer, and creative technologist."
+  page="about"
+>
+  <div data-page="about" class="section-spacing">
+    <div class="container-custom max-w-3xl">
+      <h1 class="text-4xl md:text-5xl font-display font-bold mb-8" id="page-title">
+        About me
+      </h1>
+      
+      <div class="prose prose-invert prose-cyan prose-lg max-w-none">
+        <div id="bio-content">
+          <p>
+            I'm a passionate product engineer who loves building beautiful and functional digital experiences.
+          </p>
+          
+          <p>
+            With expertise in modern web technologies, mobile development, and creative coding, I bridge the gap between design and engineering to create products that users love.
+          </p>
+          
+          <h2>Skills & Technologies</h2>
+          <div class="not-prose grid grid-cols-2 md:grid-cols-3 gap-3">
+            <div class="glass-card p-3 text-center">
+              <div class="text-cyan-primary font-semibold">Next.js</div>
+            </div>
+            <div class="glass-card p-3 text-center">
+              <div class="text-cyan-primary font-semibold">React</div>
+            </div>
+            <div class="glass-card p-3 text-center">
+              <div class="text-cyan-primary font-semibold">TypeScript</div>
+            </div>
+            <div class="glass-card p-3 text-center">
+              <div class="text-green-acid font-semibold">Astro</div>
+            </div>
+            <div class="glass-card p-3 text-center">
+              <div class="text-green-acid font-semibold">React Native</div>
+            </div>
+            <div class="glass-card p-3 text-center">
+              <div class="text-green-acid font-semibold">Node.js</div>
+            </div>
+          </div>
+          
+          <h2>Let's Connect</h2>
+          <p>
+            Feel free to reach out if you want to collaborate on a project, need consulting, or just want to chat about technology and design.
+          </p>
+          
+          <div class="not-prose flex gap-4">
+            <a href="https://github.com/jimmyeliasson" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/jimmyeliasson" target="_blank" rel="noopener noreferrer" class="btn-secondary">
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getLang, t } from '../i18n';
+  
+  function updateAboutPage() {
+    const lang = getLang();
+    const title = document.getElementById('page-title');
+    
+    if (title) title.textContent = t('about.title', lang);
+  }
+  
+  updateAboutPage();
+  window.addEventListener('langchange', updateAboutPage);
+</script>
+</BaseLayout>

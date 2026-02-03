@@ -1,0 +1,84 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import { getCollection } from 'astro:content';
+
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+
+const updates = await getCollection('updates');
+const sortedUpdates = updates.sort((a, b) => 
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<AdminLayout title="Bygglogg">
+  <div class="space-y-6">
+    <div class="flex items-center justify-between">
+      <h2 class="text-3xl font-display font-bold text-text-primary">Bygglogg</h2>
+      <a href="/admin/updates/new" class="px-6 py-3 bg-gradient-to-r from-green-acid to-cyan-primary text-glass-dark font-semibold rounded-lg hover:shadow-lg hover:shadow-green-acid/30 transition-all duration-300 transform hover:-translate-y-0.5">
+        + Ny Uppdatering
+      </a>
+    </div>
+
+    <div class="space-y-4">
+      {sortedUpdates.map(update => (
+        <div class="bg-glass-surface p-6 rounded-glass border border-glass-border hover:border-green-acid transition-all duration-300 group">
+          <div class="flex items-start justify-between gap-6">
+            <div class="flex-1">
+              <div class="flex items-center gap-3 mb-2">
+                <h3 class="text-xl font-display font-semibold text-text-primary group-hover:text-green-acid transition-colors duration-300">
+                  {update.data.title.sv}
+                </h3>
+                <span class="text-text-secondary text-sm">
+                  {new Date(update.data.date).toLocaleDateString('sv-SE')}
+                </span>
+              </div>
+            </div>
+
+            <div class="flex gap-2">
+              <a href={`/admin/updates/${update.slug}`} class="p-2 bg-glass-dark border border-glass-border rounded-lg hover:border-green-acid hover:text-green-acid transition-all duration-300" title="Redigera">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                </svg>
+              </a>
+              <button data-delete-update={update.slug} class="p-2 bg-glass-dark border border-glass-border rounded-lg hover:border-red-500 hover:text-red-500 transition-all duration-300" title="Ta bort">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  document.querySelectorAll('[data-delete-update]').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      const slug = (e.currentTarget as HTMLElement).getAttribute('data-delete-update');
+      
+      if (!confirm(`Är du säker på att du vill ta bort uppdateringen "${slug}"?`)) {
+        return;
+      }
+      
+      try {
+        const response = await fetch(`/functions/api/updates/${slug}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          const error = await response.json();
+          alert(`Kunde inte ta bort uppdateringen: ${error.error || 'Unknown error'}`);
+        }
+      } catch (error) {
+        alert('Ett fel uppstod');
+        console.error(error);
+      }
+    });
+  });
+</script>

@@ -1,0 +1,92 @@
+{
+    "nav": {
+        "home": "Home",
+        "projects": "Projects",
+        "buildLog": "Build Log",
+        "ideaLab": "Idea Lab",
+        "about": "About"
+    },
+    "hero": {
+        "tagline": "Crafting innovative digital experiences",
+        "subtitle": "Senior Product Engineer & Creative Technologist",
+        "cta": "Explore my projects"
+    },
+    "sections": {
+        "myProjects": "My Projects",
+        "latestUpdates": "Latest Updates",
+        "ideaLab": "Idea Lab"
+    },
+    "project": {
+        "status": {
+            "active": "Active",
+            "done": "Done",
+            "paused": "Paused"
+        },
+        "viewProject": "View project",
+        "repository": "Repository",
+        "liveDemo": "Live demo",
+        "year": "Year",
+        "role": "Role",
+        "stack": "Tech Stack",
+        "highlights": "Highlights"
+    },
+    "buildLog": {
+        "title": "Build Log",
+        "readMore": "Read more",
+        "publishedOn": "Published on",
+        "empty": "No updates yet"
+    },
+    "ideaLab": {
+        "title": "Idea Lab",
+        "description": "Generate unique project ideas with AI-assisted brainstorming",
+        "generate": "Generate ideas",
+        "seedPlaceholder": "Optional seed prompt...",
+        "saveToBacklog": "Save to backlog",
+        "backlog": "Saved Ideas",
+        "emptyBacklog": "No backlog yet. Generate and save ideas!",
+        "idea": {
+            "title": "Title",
+            "pitch": "Pitch",
+            "features": "Features",
+            "stack": "Suggested stack"
+        }
+    },
+    "about": {
+        "title": "About me",
+        "bio": "I'm a passionate product engineer who loves building beautiful and functional digital experiences."
+    },
+    "footer": {
+        "followMe": "Follow me",
+        "rights": "All rights reserved"
+    },
+    "meta": {
+        "home": {
+            "title": "Jimmy Eliasson - Product Engineer & Creative Technologist",
+            "description": "Portfolio of Jimmy Eliasson. Explore innovative projects, build log, and experimental ideas."
+        },
+        "projects": {
+            "title": "Projects - Jimmy Eliasson",
+            "description": "Explore my latest projects in web development, mobile apps, and creative technology."
+        },
+        "buildLog": {
+            "title": "Build Log - Jimmy Eliasson",
+            "description": "Follow my journey as a developer through updates and posts."
+        },
+        "ideaLab": {
+            "title": "Idea Lab - Jimmy Eliasson",
+            "description": "Experiment with AI-generated project ideas and brainstorming."
+        },
+        "about": {
+            "title": "About - Jimmy Eliasson",
+            "description": "Get to know Jimmy Eliasson - product engineer, designer, and creative technologist."
+        }
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "noResults": "No results",
+        "filter": "Filter",
+        "all": "All",
+        "search": "Search"
+    }
+}

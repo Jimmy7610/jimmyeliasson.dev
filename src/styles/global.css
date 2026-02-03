@@ -1,0 +1,162 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-glass-border;
+  }
+
+  html {
+    @apply bg-glass-dark text-text-primary;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    @apply antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold;
+  }
+
+  code {
+    @apply font-mono text-sm;
+  }
+}
+
+@layer components {
+
+  /* Glass card effect */
+  .glass-card {
+    @apply bg-glass-surface bg-opacity-60 backdrop-blur-glass border border-glass-border rounded-glass;
+  }
+
+  /* Glow border effect */
+  .glow-border {
+    @apply relative;
+  }
+
+  .glow-border::before {
+    @apply absolute inset-0 rounded-glass opacity-0 transition-opacity duration-300;
+    content: '';
+    background: linear-gradient(135deg, theme('colors.cyan.primary'), theme('colors.green.acid'));
+    z-index: -1;
+    padding: 1px;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  .glow-border:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Button styles */
+  .btn-primary {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply bg-gradient-to-r from-cyan-primary to-green-acid text-glass-dark;
+    @apply hover:shadow-lg hover:shadow-cyan-primary/50 hover:-translate-y-0.5;
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 rounded-lg font-medium transition-all duration-300;
+    @apply bg-glass-surface border border-glass-border text-text-primary;
+    @apply hover:border-cyan-primary hover:-translate-y-0.5;
+  }
+
+  /* Nav link styles */
+  .nav-link {
+    @apply px-4 py-2 rounded-lg transition-all duration-300;
+    @apply text-text-secondary hover:text-text-primary;
+    @apply hover:bg-glass-surface;
+  }
+
+  .nav-link-active {
+    @apply text-cyan-primary bg-glass-surface;
+  }
+
+  /* Project card */
+  .project-card {
+    @apply glass-card glow-border p-6 transition-all duration-300;
+    @apply hover:-translate-y-2 hover:shadow-xl hover:shadow-cyan-primary/20;
+  }
+
+  /* Status badge */
+  .badge {
+    @apply px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-active {
+    @apply bg-green-acid/20 text-green-acid border border-green-acid/50;
+  }
+
+  .badge-done {
+    @apply bg-cyan-primary/20 text-cyan-primary border border-cyan-primary/50;
+  }
+
+  .badge-paused {
+    @apply bg-text-muted/20 text-text-muted border border-text-muted/50;
+  }
+}
+
+@layer utilities {
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-primary to-green-acid bg-clip-text text-transparent;
+  }
+
+  /* Section spacing */
+  .section-spacing {
+    @apply py-16 md:py-24;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: theme('colors.glass.dark');
+}
+
+::-webkit-scrollbar-thumb {
+  background: theme('colors.glass.border');
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: theme('colors.cyan.dim');
+}
+
+/* Selection */
+::selection {
+  background: theme('colors.cyan.primary');
+  color: theme('colors.glass.dark');
+}

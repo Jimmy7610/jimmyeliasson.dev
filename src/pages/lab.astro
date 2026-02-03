@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import IdeaLab from '../components/islands/IdeaLab';
+
+---
+
+<BaseLayout 
+  title="Idea Lab - Jimmy Eliasson"
+  description="Experiment with AI-generated project ideas and brainstorming."
+  page="ideaLab"
+>
+  <div data-page="ideaLab" class="section-spacing">
+    <div class="container-custom max-w-5xl">
+      <!-- Header -->
+      <div class="text-center mb-12">
+        <h1 class="text-4xl md:text-5xl font-display font-bold mb-4 text-gradient" id="page-title">
+          Idea Lab
+        </h1>
+        <p class="text-lg text-text-secondary max-w-2xl mx-auto" id="page-description">
+          Generate unique project ideas with AI-assisted brainstorming
+        </p>
+      </div>
+
+      <!-- IdeaLab Component -->
+      <IdeaLab client:load />
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  import { getLang, t } from '../i18n';
+  
+  function updateLabPage() {
+    const lang = getLang();
+    const title = document.getElementById('page-title');
+    const desc = document.getElementById('page-description');
+    
+    if (title) title.textContent = t('ideaLab.title', lang);
+    if (desc) desc.textContent = t('ideaLab.description', lang);
+  }
+  
+  updateLabPage();
+  window.addEventListener('langchange', updateLabPage);
+</script>
+</BaseLayout>

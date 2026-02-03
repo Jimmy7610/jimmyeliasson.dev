@@ -1,0 +1,394 @@
+/* Portfolio Theme for Decap CMS - Exact Copy of Main Site */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* Base styling - matching portfolio exactly */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body,
+#nc-root,
+#nc-root>*,
+[data-slate-editor] {
+    background-color: hsl(220, 20%, 8%) !important;
+    background: hsl(220, 20%, 8%) !important;
+    color: hsl(0, 0%, 95%) !important;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    line-height: 1.6;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Typography - matching portfolio */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Outfit', 'Inter', system-ui, sans-serif !important;
+    font-weight: 600 !important;
+    color: hsl(0, 0%, 95%) !important;
+}
+
+code,
+pre {
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+    font-size: 0.875rem;
+}
+
+/* Glass card effect - portfolio style */
+.glass-card,
+[class*="Card"],
+[class*="Panel"],
+section,
+article {
+    background-color: hsl(220, 15%, 12%) !important;
+    background-opacity: 0.6 !important;
+    backdrop-filter: blur(12px) !important;
+    border: 1px solid hsl(220, 20%, 20%) !important;
+    border-radius: 12px !important;
+}
+
+/* Sidebar - exact portfolio colors */
+aside,
+nav,
+[class*="sidebar"],
+[class*="Sidebar"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    background: hsl(220, 15%, 12%) !important;
+    border-right: 1px solid hsl(220, 20%, 20%) !important;
+}
+
+/* Links - cyan primary, acid green hover */
+a {
+    color: hsl(180, 95%, 45%) !important;
+    text-decoration: none !important;
+    transition: color 0.3s ease !important;
+}
+
+a:hover {
+    color: hsl(80, 90%, 50%) !important;
+}
+
+/* Navigation links in sidebar */
+aside a,
+nav a {
+    color: hsl(0, 0%, 70%) !important;
+    padding: 8px 16px !important;
+    display: block !important;
+    transition: all 0.3s ease !important;
+}
+
+aside a:hover,
+nav a:hover {
+    color: hsl(180, 95%, 45%) !important;
+    background-color: rgba(180, 250, 250, 0.1) !important;
+}
+
+/* Active navigation */
+[aria-current="page"],
+[data-active="true"],
+.active {
+    color: hsl(180, 95%, 45%) !important;
+    background-color: rgba(180, 250, 250, 0.15) !important;
+    border-left: 3px solid hsl(180, 95%, 45%) !important;
+}
+
+/* Form inputs - glass style */
+input,
+textarea,
+select,
+[contenteditable="true"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    background: hsl(220, 15%, 12%) !important;
+    border: 1px solid hsl(220, 20%, 20%) !important;
+    border-radius: 8px !important;
+    color: hsl(0, 0%, 95%) !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+    padding: 8px 12px !important;
+    transition: all 0.3s ease !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: hsl(0, 0%, 50%) !important;
+    opacity: 1 !important;
+}
+
+input:focus,
+textarea:focus,
+select:focus,
+[contenteditable="true"]:focus {
+    border-color: hsl(180, 95%, 45%) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 3px rgba(180, 250, 250, 0.2) !important;
+}
+
+/* Labels */
+label,
+[class*="Label"] {
+    color: hsl(0, 0%, 70%) !important;
+    font-size: 0.8125rem !important;
+    font-weight: 500 !important;
+    margin-bottom: 4px !important;
+    display: block !important;
+}
+
+/* Buttons - glass style */
+button,
+[role="button"],
+[type="button"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    background: hsl(220, 15%, 12%) !important;
+    border: 1px solid hsl(220, 20%, 20%) !important;
+    border-radius: 8px !important;
+    color: hsl(0, 0%, 95%) !important;
+    font-family: 'Inter', system-ui, sans-serif !important;
+    font-weight: 500 !important;
+    padding: 8px 16px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+button:hover,
+[role="button"]:hover {
+    border-color: hsl(180, 95%, 45%) !important;
+    background-color: hsl(220, 20%, 16%) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Primary buttons - gradient like portfolio */
+button[type="submit"],
+button[class*="primary"],
+button[class*="Primary"],
+[class*="ActionButton"],
+[data-testid*="publish"] {
+    background: linear-gradient(135deg, hsl(180, 95%, 45%), hsl(80, 90%, 50%)) !important;
+    color: hsl(220, 20%, 8%) !important;
+    border: none !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(180, 250, 250, 0.3) !important;
+}
+
+button[type="submit"]:hover,
+button[class*="primary"]:hover {
+    box-shadow: 0 6px 20px rgba(180, 250, 250, 0.5), 0 0 30px rgba(180, 250, 250, 0.3) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Header bar */
+header,
+[class*="Header"],
+[class*="TopBar"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    background: hsl(220, 15%, 12%) !important;
+    border-bottom: 1px solid hsl(220, 20%, 20%) !important;
+    padding: 12px 24px !important;
+}
+
+/* Main content area */
+main,
+[role="main"],
+[class*="MainContainer"] {
+    background-color: hsl(220, 20%, 8%) !important;
+    background: hsl(220, 20%, 8%) !important;
+}
+
+/* Dropdown menus - glass effect */
+[role="menu"],
+[role="listbox"],
+[class*="Dropdown"],
+[class*="Menu"],
+ul[class*="css-"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    border: 1px solid hsl(180, 95%, 45%) !important;
+    border-radius: 12px !important;
+    box-shadow:
+        0 8px 32px rgba(0, 0, 0, 0.5),
+        0 0 0 1px hsl(220, 20%, 20%) !important;
+    backdrop-filter: blur(12px) !important;
+}
+
+[role="menuitem"],
+[role="option"] {
+    color: hsl(0, 0%, 95%) !important;
+    padding: 8px 12px !important;
+    transition: all 0.2s ease !important;
+}
+
+[role="menuitem"]:hover,
+[role="option"]:hover {
+    background-color: rgba(180, 250, 250, 0.1) !important;
+    color: hsl(180, 95%, 45%) !important;
+}
+
+/* Code editor - matching portfolio */
+.CodeMirror {
+    background-color: hsl(220, 15%, 12%) !important;
+    color: hsl(0, 0%, 95%) !important;
+    font-family: 'JetBrains Mono', 'Courier New', monospace !important;
+    border: 1px solid hsl(220, 20%, 20%) !important;
+    border-radius: 8px !important;
+}
+
+.CodeMirror-gutters {
+    background-color: hsl(220, 20%, 8%) !important;
+    border-right: 1px solid hsl(220, 20%, 20%) !important;
+}
+
+.CodeMirror-cursor {
+    border-left: 2px solid hsl(180, 95%, 45%) !important;
+}
+
+.CodeMirror-selected,
+. CodeMirror-selectedtext {
+    background-color: rgba(180, 250, 250, 0.2) !important;
+}
+
+.CodeMirror-line {
+    color: hsl(0, 0%, 95%) !important;
+}
+
+/* Tabs */
+[role="tab"],
+[role="tablist"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    border-bottom: 1px solid hsl(220, 20%, 20%) !important;
+}
+
+[role="tab"] {
+    color: hsl(0, 0%, 70%) !important;
+    padding: 12px 24px !important;
+    border-bottom: 2px solid transparent !important;
+    transition: all 0.3s ease !important;
+}
+
+[role="tab"]:hover {
+    color: hsl(180, 95%, 45%) !important;
+}
+
+[role="tab"][aria-selected="true"] {
+    color: hsl(180, 95%, 45%) !important;
+    border-bottom-color: hsl(180, 95%, 45%) !important;
+    background-color: hsl(220, 20%, 8%) !important;
+}
+
+/* Toast notifications */
+[role="alert"],
+[class*="Toast"],
+[class*="Notification"] {
+    background-color: hsl(220, 15%, 12%) !important;
+    border: 1px solid hsl(180, 95%, 45%) !important;
+    border-radius: 12px !important;
+    color: hsl(0, 0%, 95%) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+    padding: 16px !important;
+}
+
+/* Scrollbars - matching portfolio */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(220, 20%, 8%);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: hsl(220, 20%, 20%);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(180, 95%, 45%);
+}
+
+/* Firefox scrollbar */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(220, 20%, 20%) hsl(220, 20%, 8%);
+}
+
+/* Selection - cyan on dark */
+::selection {
+    background-color: hsl(180, 95%, 45%);
+    color: hsl(220, 20%, 8%);
+}
+
+::-moz-selection {
+    background-color: hsl(180, 95%, 45%);
+    color: hsl(220, 20%, 8%);
+}
+
+/* SVG icons inherit color */
+svg {
+    fill: currentColor;
+    color: inherit;
+}
+
+/* Badge/Tag components */
+[class*="Badge"],
+[class*="Tag"] {
+    background-color: rgba(180, 250, 250, 0.1) !important;
+    color: hsl(180, 95%, 45%) !important;
+    border: 1px solid hsl(180, 95%, 45%) !important;
+    border-radius: 6px !important;
+    padding: 2px 8px !important;
+    font-size: 0.75rem !important;
+    font-weight: 500 !important;
+}
+
+/* Loading spinner */
+[class*="Loader"],
+[class*="Spinner"] {
+    border-color: hsl(180, 95%, 45%) transparent transparent transparent !important;
+}
+
+/* Dividers */
+hr,
+[class*="Divider"] {
+    border-color: hsl(220, 20%, 20%) !important;
+    border-style: solid !important;
+    border-width: 1px 0 0 0 !important;
+    margin: 16px 0 !important;
+}
+
+/* File preview thumbnails */
+[class*="Preview"],
+[class*="Thumbnail"],
+img {
+    background-color: hsl(220, 20%, 16%) !important;
+    border: 1px solid hsl(220, 20%, 20%) !important;
+    border-radius: 8px !important;
+}
+
+/* Success states */
+[class*="success"],
+[class*="Success"],
+[data-status="success"] {
+    color: hsl(80, 90%, 50%) !important;
+}
+
+/* Error states */
+[class*="error"],
+[class*="Error"],
+[data-status="error"] {
+    color: hsl(0, 80%, 60%) !important;
+}
+
+/* Warning states */
+[class*="warning"],
+[class*="Warning"],
+[data-status="warning"] {
+    color: hsl(30, 100%, 55%) !important;
+}

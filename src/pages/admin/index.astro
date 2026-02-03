@@ -1,0 +1,72 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+import { getCollection } from 'astro:content';
+
+// Redirect to home in production
+if (import.meta.env.PROD) {
+  return Astro.redirect('/');
+}
+
+// Get content statistics
+const projects = await getCollection('projects');
+const updates = await getCollection('updates');
+
+const stats = {
+  totalProjects: projects.length,
+  activeProjects: projects.filter(p => p.data.status === 'active').length,
+  totalUpdates: updates.length,
+  recentUpdates: updates.slice(0, 5).sort((a, b) => 
+    new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+  )
+};
+---
+
+<AdminLayout title="Dashboard">
+  <div class="space-y-8">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div class="bg-glass-surface p-6 rounded-glass border border-glass-border hover:border-cyan-primary transition-all duration-300">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-text-secondary text-sm font-medium">Totalt Projekt</p>
+            <p class="text-4xl font-display font-bold text-cyan-primary mt-2">{stats.totalProjects}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-glass-surface p-6 rounded-glass border border-glass-border hover:border-green-acid transition-all duration-300">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-text-secondary text-sm font-medium">Aktiva Projekt</p>
+            <p class="text-4xl font-display font-bold text-green-acid mt-2">{stats.activeProjects}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-glass-surface p-6 rounded-glass border border-glass-border hover:border-cyan-primary transition-all duration-300">
+        <div class="flex items-center justify-between">
+          <div>
+            <p class="text-text-secondary text-sm font-medium">Bygglogg Inlägg</p>
+            <p class="text-4xl font-display font-bold text-cyan-primary mt-2">{stats.totalUpdates}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div>
+      <h2 class="text-2xl font-display font-semibold mb-4 text-text-primary">Snabbåtgärder</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <a href="/admin/projects/new" class="group bg-gradient-to-br from-cyan-primary to-green-acid p-6 rounded-glass hover:shadow-lg hover:shadow-cyan-primary/30 transition-all duration-300 transform hover:-translate-y-1">
+          <h3 class="text-lg font-display font-semibold text-glass-dark">Nytt Projekt</h3>
+          <p class="text-glass-dark text-opacity-80 text-sm">Skapa ett nytt portfolio-projekt</p>
+        </a>
+
+        <a href="/admin/updates/new" class="group bg-gradient-to-br from-green-acid to-cyan-primary p-6 rounded-glass hover:shadow-lg hover:shadow-green-acid/30 transition-all duration-300 transform hover:-translate-y-1">
+          <h3 class="text-lg font-display font-semibold text-glass-dark">Ny Bygglogg</h3>
+          <p class="text-glass-dark text-opacity-80 text-sm">Lägg till nytt bygglogg-inlägg</p>
+        </a>
+      </div>
+    </div>
+  </div>
+</AdminLayout>
